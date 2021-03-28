@@ -17,10 +17,9 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@NotNull(message = "O Nome não pode  ser nulo !")
+	@NotNull
 	@Size(min = 3, 
-	max = 20, 
-	message = " Só pode ser entre {min} e {max} caracteters" )
+	max = 20  )
 	private String nome;
 
 	public Long getCodigo() {
