@@ -20,11 +20,11 @@ public class PessoaService {
 
 	public Pessoa atualizar(@PathVariable Long codigo, @RequestBody Pessoa pessoa) {
 		Pessoa pessoaSalva = this.pessoaRepository.findById(codigo)
-			      .orElseThrow(() -> new EmptyResultDataAccessException(1));
+				.orElseThrow(() -> new EmptyResultDataAccessException(1));
 
-			  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
 
-			  return this.pessoaRepository.save(pessoaSalva);
+		return this.pessoaRepository.save(pessoaSalva);
 	}
 
 	public void atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {
@@ -33,12 +33,11 @@ public class PessoaService {
 		pessoaRepository.save(pessoaSalva);
 	}
 
-	
 	public Pessoa buscarPessoaPeloCodigo(Long codigo) {
-	    Optional<Pessoa> pessoa = pessoaRepository.findById(codigo);
+		Optional<Pessoa> pessoa = pessoaRepository.findById(codigo);
 
-	    return pessoa.orElseThrow(() -> new EmptyResultDataAccessException(1));
-	
+		return pessoa.orElseThrow(() -> new EmptyResultDataAccessException(1));
+
 	}
 
 }
