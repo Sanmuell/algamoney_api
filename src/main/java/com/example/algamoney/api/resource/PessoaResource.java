@@ -49,7 +49,7 @@ public class PessoaResource {
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
 		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
 
-		publisher.publishEvent(new RecursoCriadoEvent(this, pessoaSalva.getId(), response));
+		publisher.publishEvent(new RecursoCriadoEvent(this, pessoaSalva.getCodigo(), response));
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
 	}
 
