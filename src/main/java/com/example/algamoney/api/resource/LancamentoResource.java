@@ -25,6 +25,7 @@ import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.repositories.LancamentoRepository;
+import com.example.algamoney.api.repositories.filter.LancamentoFilter;
 import com.example.algamoney.api.service.LancamentoService;
 import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
 
@@ -45,20 +46,19 @@ public class LancamentoResource {
 	private MessageSource messageSource;
 
 	@GetMapping
-	public ResponseEntity<List<Lancamento>> listarLancamentos() {
-		List<Lancamento> lancamentos = lancamentoRepository.findAll();
-		return !lancamentos.isEmpty() ? ResponseEntity.ok(lancamentos) : ResponseEntity.noContent().build();
+	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
+		return lancamentoRepository.filtrar(lancamentoFilter);
 	}
 
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Lancamento> listarLancamentoPorCodigo( @PathVariable Long codigo) {
+	public ResponseEntity<Lancamento> buscarPeloCodigo( @PathVariable Long codigo) {
 		Optional<Lancamento> lancamentos = this.lancamentoRepository.findById(codigo);
 		return lancamentos.isPresent() ? ResponseEntity.ok(lancamentos.get()) : ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping
 	public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) throws PessoaInexistenteOuInativaException {
-		Lancamento lancamentoSalvo = lancamentoService.Salva(lancamento);
+		Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamentoSalvo.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoSalvo);
 	}
