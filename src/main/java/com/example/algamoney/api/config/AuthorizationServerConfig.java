@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -20,6 +21,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private AuthenticationManager authenticationManager;
 
 	
+	@SuppressWarnings("deprecation")
 	@Override	
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
@@ -39,6 +41,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints
@@ -48,13 +51,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.authenticationManager(authenticationManager);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
+		@SuppressWarnings("deprecation")
 		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
 		accessTokenConverter.setSigningKey("algaworks");
 		return accessTokenConverter;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Bean
 	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
